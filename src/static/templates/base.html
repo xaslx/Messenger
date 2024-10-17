@@ -5,38 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messenger</title>
     <link rel="stylesheet" href="/src/static/css/styles.css">
+    <script src="/src/static/js/base.js" defer></script>
 </head>
 <body>
     <header>
         <div class="container">
             <div class="logo">
+                
                 <a href="/"><img width="50px" height="50px" src="/src/static/icon.png" alt="Логотип" /></a>
                 <span class="logo-text">Messenger</span>
+                
             </div>
             
             <div class="auth">
                 {% if user%}
                     <div class="user-info">
-                        <img src="{{ user.avatar_url }}" alt="Аватар" class="avatar">
-                        <span class="user-name">{{ user.first_name }} {{ user.last_name }}</span>
+                        <span class="user-name">{{ user.name }} {{ user.surname }}</span>
+                        <div class="avatar" onclick="toggleMenu()">
+                            <img src="/src/static/ava.png" alt="Аватар" style="width: 100%; height: 100%; border-radius: 50%;">
+                        </div>
+              
+                        <div id="dropdown-menu" class="dropdown-menu">
+                            <a href="#" onclick="logout(event)">Выход</a>
+                        </div>
+          
                     </div>
+
+                    
+                
                 {% else %}
-                    <a href="/register" class="auth-link">Регистрация</a>
-                    <a href="/login" class="auth-link">Вход</a>
+                    <a href="/auth/register" class="auth-link">Регистрация</a>
+                    <a href="/auth/login" class="auth-link">Вход</a>
                 {% endif %}
             </div>
         </div>
     </header>
 
     <main>
-        {% block main %}
-        {% endblock %}
+        <div class="container">
+            {% block main %}
+                {% if not user %}
+                    <p style="margin: 0 auto;">Вы должны войти в свой аккаунт, или зарегистрироваться.</p>
+                {% endif %}
+            {% endblock %}
+        </div>
     </main>
 
-    
     {% block script %}
-
-    
     {% endblock %}
 </body>
 </html>
