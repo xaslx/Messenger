@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messenger</title>
+    <link rel="stylesheet" href="/src/static/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="/"><img width="50px" height="50px" src="/src/static/icon.png" alt="Логотип" /></a>
+                <span class="logo-text">Messenger</span>
+            </div>
+            
+            <div class="auth">
+                {% if user%}
+                    <div class="user-info">
+                        <img src="{{ user.avatar_url }}" alt="Аватар" class="avatar">
+                        <span class="user-name">{{ user.first_name }} {{ user.last_name }}</span>
+                    </div>
+                {% else %}
+                    <a href="/register" class="auth-link">Регистрация</a>
+                    <a href="/login" class="auth-link">Вход</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block main %}
+        {% endblock %}
+    </main>
+
+    
+    {% block script %}
+
+    
+    {% endblock %}
+</body>
+</html>
