@@ -31,7 +31,7 @@ body {
 }
 
 .logo-text {
-    font-size:16px;
+    font-size: 18px;
     color: black;
     font-weight: bold;
 }
@@ -103,7 +103,74 @@ body {
 
 .user-name {
     font-weight: bold;
+    font-size: 18px;
 }
+
+.main-container {
+    max-width: 1000px;
+    min-height: 600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+    margin-top: 25px;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-list-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+    width: 300px;
+    padding: 10px 0;
+    text-decoration: none;
+    color: inherit;
+}
+
+.user-card:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.horizontal-divider {
+    height: 1px;
+    background-color: black;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.vertical-divider {
+    width: 2px;
+    background-color: black;
+    height: 100vh;
+    margin: 0 20px;
+}
+
+
+.dialog-container {
+    flex-grow: 1;
+    padding: 20px;
+    border-radius: 10px;
+    min-height: 600px;
+}
+
 
 
 
@@ -183,4 +250,34 @@ body {
 
 .auth-link-register:hover {
     text-decoration: underline;
+}
+
+
+/* /me */
+.profile-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    
+    text-align: center;
+    width: 300px;
+    margin: 0 auto;
+    margin-left: 325px;
+}
+.profile-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+.profile-name {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+.profile-email, .profile-registration-date, .profile-telegram-id {
+    font-size: 0.9em;
+    color: #555;
+    margin: 5px 0;
 }

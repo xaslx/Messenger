@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block main %}
+    {% if user %}
+        <div class="profile-container">
+            <div class="profile-card">
+                <img width="250px" height="250px" src="/src/static/ava-big.png" alt="Profile Photo" class="profile-photo">
+                <h2>ID: {{ user.id }}</h2>
+                <h3 class="profile-name">{{ user.name }} {{ user.surname }}</h3>
+                <p class="profile-email">{{ user.email }}</p>
+                <p class="profile-registration-date">Дата регистрации: {{ user.registered_at }}</p>
+                <p class="profile-telegram-id">Telegram ID: </p>
+            </div>
+        </div>
+    {% else %}
+        <p style="margin: 0 auto;">Вы должны войти в свой аккаунт, или зарегистрироваться.</p>
+    {% endif %}
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+
+

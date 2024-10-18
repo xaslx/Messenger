@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messenger</title>
     <link rel="stylesheet" href="/src/static/css/styles.css">
+    <link rel="icon" href="/src/static/icon.ico" type="image/x-icon">
     <script src="/src/static/js/base.js" defer></script>
 </head>
 <body>
@@ -26,6 +27,8 @@
                         </div>
               
                         <div id="dropdown-menu" class="dropdown-menu">
+                            <a href="/me">Мой профиль</a>
+                            <a href="/tg">Подключить телеграм</a>
                             <a href="#" onclick="logout(event)">Выход</a>
                         </div>
           
@@ -42,16 +45,106 @@
     </header>
 
     <main>
-        <div class="container">
+        <div class="main-container">
             {% block main %}
                 {% if not user %}
                     <p style="margin: 0 auto;">Вы должны войти в свой аккаунт, или зарегистрироваться.</p>
+                {% else %}
+                    <div class="sidebar">
+                        <div class="user-list-container">
+                            {% for person in people %}
+                                <a href="javascript:void(0);" class="user-card" data-id="{{ person.id }}" onclick="openDialog(this)">
+                                    <img src="/src/static/ava.png" alt="{{ person.name }}" class="user-avatar">
+                                    <span class="user-fullname">{{ person.name }} {{ person.surname }}</span>
+                                </a>
+                                {% if not loop.last %}
+                                    <div class="horizontal-divider"></div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="vertical-divider"></div>
+                    <div class="dialog-container">
+                        
+                    </div>
+                    <div class="input-container" style="display: none;">
+                        <input type="text" placeholder="Введите ваше сообщение..." id="messageInput">
+                        <button onclick="sendMessage()">Отправить</button>
+                    </div>
                 {% endif %}
             {% endblock %}
         </div>
     </main>
+    <style>
+        .dialog-container {
+        max-width: 600px;
+        margin: 0 auto;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 16px;
+        background-color: #f9f9f9;
+    }
+
+    .messages {
+        max-height: 400px;
+        overflow-y: auto;
+        margin-bottom: 16px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+
+    .message {
+        margin: 10px 0;
+        padding: 8px;
+        border-radius: 5px;
+        position: relative;
+    }
+
+    .message.sender {
+        background-color: #d1e7dd;
+        text-align: right;
+        margin-left: 50px; /* Отступ для выравнивания */
+    }
+
+    .message.receiver {
+        background-color: #f8d7da;
+        text-align: left;
+        margin-right: 50px; /* Отступ для выравнивания */
+    }
+
+    input[type="text"] {
+        width: 96%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: vertical;
+    }
+
+    button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+    </style>
+    
+    
+    
+    
 
     {% block script %}
+    <script src="/src/static/js/dialog.js"></script>
     {% endblock %}
 </body>
 </html>
