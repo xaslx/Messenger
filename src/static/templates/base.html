@@ -50,16 +50,17 @@
                 {% if not user %}
                     <p style="margin: 0 auto;">Вы должны войти в свой аккаунт, или зарегистрироваться.</p>
                 {% else %}
+                    {% if people %}
                     <div class="sidebar">
                         <div class="user-list-container">
                             {% for person in people %}
                             {% if person.id != user.id %}
-                                <a href="javascript:void(0);" class="user-card" data-id="{{ person.id }}" onclick="openDialog(this)">
+                                <a href="javascript:void(0);" class="user-card selected" data-id="{{ person.id }}" onclick="openDialog(this)">
                                     <img src="/src/static/ava.png" alt="{{ person.name }}" class="user-avatar">
                                     <span class="user-fullname">{{ person.name }} {{ person.surname }}</span>
                                 </a>
                                 {% if not loop.last %}
-                                    <div class="horizontal-divider"></div>
+                            
                                 {% endif %}
                             {% endif %}
                         {% endfor %}    
@@ -67,9 +68,10 @@
                         
                         
                     </div>
+                    {% endif %}
                
                     <div class="dialog-container">
-                        <h3>Нажмите на человека с кем хотите открыть диалог</h3>
+                        <h3 style="text-align: right;">Нажмите на человека с кем хотите открыть диалог</h3>
                     </div>
                     <div class="input-container" style="display: none;">
                         <input type="text" placeholder="Введите ваше сообщение..." id="messageInput">
