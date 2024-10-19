@@ -1,7 +1,21 @@
 let socket;
 
+document.addEventListener("DOMContentLoaded", function() {
+    const userCards = document.querySelectorAll('.user-card');
+    userCards.forEach(card => {
+        card.classList.remove('selected');
+    });
+});
+
 
 function openDialog(element) {
+    const userCards = document.querySelectorAll('.user-card');
+    userCards.forEach(card => {
+        card.classList.remove('selected');
+    });
+
+   
+    element.classList.add('selected');
     const newUserId = element.getAttribute('data-id');
 
  
