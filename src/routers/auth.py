@@ -24,7 +24,7 @@ auth_router: APIRouter = APIRouter(
 @auth_router.get('/register', status_code=200)
 async def get_register_template(
     request: Request,
-    user: UserOut = Depends(get_current_user),
+    user: Annotated[UserOut, Depends(get_current_user)]
 ) -> HTMLResponse:
     return templates.TemplateResponse(
         'register.html',
@@ -35,7 +35,7 @@ async def get_register_template(
 @auth_router.post('/register', status_code=201)
 async def rigister_user(
     user: UserRegister,
-    session: AsyncSession = Depends(get_async_session),
+    session: Annotated[AsyncSession, Depends(get_async_session)],
 ) -> UserOut:
     
     exist_user: UserOut = await UserRepository.find_one_or_none(
@@ -44,7 +44,6 @@ async def rigister_user(
 
     if exist_user:
         raise UserAlreadyExistsException
-    
     current_date_time: datetime = datetime.utcnow()
     hashed_password: str = get_password_hash(user.password)
     new_user: UserOut = await UserRepository.add(
@@ -61,7 +60,7 @@ async def rigister_user(
 async def login_user(
     response: Response,
     user: UserLogin,
-    session: AsyncSession = Depends(get_async_session),
+    session: Annotated[AsyncSession, Depends(get_async_session)],
 ) -> str:
     user: UserOut = await authenticate_user(user.email, user.password, async_db=session)
     if not user:
@@ -90,7 +89,8 @@ async def get_after_register_template(
 
 @auth_router.get('/login', status_code=200)
 async def get_login_template(
-    request: Request, user: UserOut = Depends(get_current_user)
+    request: Request, 
+    user: Annotated[UserOut, Depends(get_current_user)]
 ) -> HTMLResponse:
     return templates.TemplateResponse(
         request=request, name='login.html', context={'user': user}
