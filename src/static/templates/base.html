@@ -13,7 +13,7 @@
         <div class="container">
             <div class="logo">
                 
-                <a href="/"><img width="35px" height="35px" src="/src/static/icon.png" alt="Логотип" /></a>
+                <a href="/messages"><img width="35px" height="35px" src="/src/static/icon.png" alt="Логотип" /></a>
                 <span class="logo-text">Messenger</span>
                 
             </div>
@@ -48,7 +48,7 @@
         <div class="main-container">
             {% block main %}
                 {% if not user %}
-                    <p style="margin: 0 auto;">Вы должны войти в свой аккаунт, или зарегистрироваться.</p>
+                    <h2 style="margin: 0 auto; font-size: 20px;">Вы должны войти в свой аккаунт, или зарегистрироваться.</h2>
                 {% else %}
                     {% if people %}
                     <div class="sidebar">
@@ -73,88 +73,10 @@
                     <div class="dialog-container">
                         <h3 style="text-align: right;">Нажмите на человека с кем хотите открыть диалог</h3>
                     </div>
-                    <div class="input-container" style="display: none;">
-                        <input type="text" placeholder="Введите ваше сообщение..." id="messageInput">
-                        <button onclick="sendMessage()">Отправить</button>
-                    </div>
                 {% endif %}
             {% endblock %}
         </div>
     </main>
-    <style>
-        .dialog-container {
-            margin-top: -20px;
-        }
-  
-        .messages {
-            min-height: 350px;
-            max-height: 350px;
-            max-width: 600px;
-            overflow-y: auto;
-            margin-bottom: 16px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background-color: #fff;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .message {
-            max-width: 80%;
-            word-wrap: break-word;
-            padding: 10px;
-            border-radius: 20px;
-            font-size: 14px;
-            position: relative;
-            display: inline-block;
-            line-height: 1.4;
-        }
-
-        .message.sender {
-            background-color: #007bff;
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 0;
-        }
-
-        .message.receiver {
-            background-color: #f1f1f1;
-            color: #333;
-            align-self: flex-start;
-            border-bottom-left-radius: 0;
-        }
-
-        input[type="text"] {
-            width: 90%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 20px;
-            outline: none;
-            margin-right: 10px;
-        }
-
-        button {
-            margin-top: 15px;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 20px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-        .message-timestamp {
-            color: rgb(91, 89, 89);
-            font-size: 0.9em;
-            margin-top: 5px;
-            text-align: right;
-        }
-    </style>
     {% block script %}
     <script src="/src/static/js/dialog.js"></script>
     <script>const currentUserId = parseInt("{{ user.id }}", 10);</script>
