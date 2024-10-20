@@ -17,15 +17,4 @@ class User(Base):
     name: Mapped[str]
     surname: Mapped[str]
     registered_at: Mapped[DateTime] = mapped_column(DateTime)
-    telegraim_id: Mapped[int]
-
-    sent_messages: Mapped[list['Message']] = relationship(
-        'Message', 
-        foreign_keys='Message.sender_id', 
-        back_populates='sender', 
-        cascade='all, delete-orphan')
-    received_messages: Mapped[list['Message']] = relationship(
-        'Message', 
-        foreign_keys='Message.recipient_id', 
-        back_populates='recipient', 
-        cascade='all, delete-orphan')
+    telegram_id: Mapped[int]

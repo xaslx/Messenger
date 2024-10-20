@@ -1,7 +1,12 @@
 from sqlalchemy import ForeignKey, String, DateTime
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from database import Base
 from datetime import datetime
+from typing import TYPE_CHECKING
+
+
+if TYPE_CHECKING:
+   from src.models.user import User
 
 class Message(Base):
     __tablename__ = 'messages'
