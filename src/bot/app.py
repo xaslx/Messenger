@@ -4,7 +4,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.client.default import DefaultBotProperties
 from fastapi import Request, Response
 
-from handlers import router
+from src.bot.handlers import router
 from config import settings
 from logger import logger
 
@@ -12,7 +12,6 @@ from logger import logger
 bot: Bot = Bot(settings.TOKEN_BOT, default=DefaultBotProperties(parse_mode="HTML"))
 dp: Dispatcher = Dispatcher()
 web_hook: str = f"/{settings.TOKEN_BOT}"
-
 
 async def set_webhook():
     webhook_url: str = f"{settings.WEBHOOK_URL}{web_hook}"
