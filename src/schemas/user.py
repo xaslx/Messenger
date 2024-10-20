@@ -6,6 +6,7 @@ class User(BaseModel):
     name: str
     surname: str
     email: EmailStr
+    telegram_id: int
 
 
 
