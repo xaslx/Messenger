@@ -6,7 +6,7 @@ document.getElementById('registration-form').addEventListener('submit', async fu
         surname: document.getElementById('last_name').value,
         email: document.getElementById('email').value,
         password: document.getElementById('password').value,
-        telegram_id: document.getElementById('telegram_id').value
+        telegram_id: parseInt(document.getElementById('telegram_id').value, 10)
     };
 
     try {
@@ -20,6 +20,7 @@ document.getElementById('registration-form').addEventListener('submit', async fu
 
         if (!response.ok) {
             const errorData = await response.json();
+            console.error('Ошибка данных:', errorData);
             throw new Error(errorData.detail || 'Ошибка регистрации');
         }
 
@@ -27,6 +28,7 @@ document.getElementById('registration-form').addEventListener('submit', async fu
         console.log('Пользователь зарегистрирован:', result);
         window.location.href = '/auth/after_register';
     } catch (error) {
+        
         console.error('Ошибка:', error);
         alert('Ошибка: ' + error.message);
     }

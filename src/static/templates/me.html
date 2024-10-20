@@ -8,8 +8,8 @@
                 <h2>ID: {{ user.id }}</h2>
                 <h3 class="profile-name">{{ user.name }} {{ user.surname }}</h3>
                 <p class="profile-email">{{ user.email }}</p>
-                <p class="profile-registration-date">Дата регистрации: {{ user.registered_at }}</p>
-                <p class="profile-telegram-id">Telegram ID: </p>
+                <p class="profile-registration-date">Дата регистрации: {{ user.registered_at.strftime('%d.%m.%y %H:%M') }}</p>
+                <p class="profile-telegram-id">Telegram ID: {{ user.telegram_id }} </p>
             </div>
         </div>
     {% else %}

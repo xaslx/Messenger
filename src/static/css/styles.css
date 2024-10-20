@@ -130,7 +130,8 @@ body {
     background-color: #f8f9fa;
     padding: 20px;
     border-right: 1px solid #dee2e6;
-    max-width: 250px;
+    max-width: 300px;
+    min-width: 250px;
 }
 
 .user-list-container {
