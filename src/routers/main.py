@@ -10,9 +10,10 @@ from src.auth.dependencies import get_current_user
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Annotated
 from src.schemas.user import UserOut
-from redis_init import redis
 from src.repositories.chat import ChatRepository
 from logger import logger
+from redis_init import redis
+
 
 
 main_router: APIRouter = APIRouter(
@@ -22,7 +23,10 @@ main_router: APIRouter = APIRouter(
 active_connections: dict[int, WebSocket] = {}
 
 
-@main_router.get('/')
+
+
+
+@main_router.get('/messages')
 async def get_main_page(
     request: Request, 
     user: Annotated[User, Depends(get_current_user)],
@@ -65,6 +69,7 @@ async def get_dialog_by_id(
 
 
         from_orm: MessageRead = [MessageRead.model_validate(i) if res else None for i in res]
+        is_online = await redis.get(f'user:{user_2.id}:is_online')
         return {
             "user": {
                 "id": user.id,
@@ -75,6 +80,7 @@ async def get_dialog_by_id(
                 "id": user_2.id,
                 "name": user_2.name,
                 "surname": user_2.surname,
+                "is_online": True if is_online else False
             },
             "messages": [{
                 "senderId": message.sender_id,
@@ -114,7 +120,7 @@ async def send_message(
     # await notify_user(message.recipient_id, message_data)  #
         
     return message_data
-  
+
 
 async def notify_user(user_id: int, message: dict):
     if user_id in active_connections:
@@ -130,7 +136,7 @@ async def notify_user(user_id: int, message: dict):
 
 
 
-@main_router.websocket("/ws/messages/{user_id}")
+@main_router.websocket('/ws/messages/{user_id}')
 async def websocket_endpoint(websocket: WebSocket, user_id: int):
     await websocket.accept()
     active_connections[user_id] = websocket
