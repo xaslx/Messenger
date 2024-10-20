@@ -9,7 +9,6 @@ from src.auth.auth import get_password_hash, create_access_token, authenticate_u
 
 from database import get_async_session
 from exceptions import UserAlreadyExistsException, UserNotFound
-from logger import logger
 from src.models.user import User
 from src.utils.jinja_template import templates
 from src.repositories.user import UserRepository
@@ -26,6 +25,9 @@ async def get_register_template(
     request: Request,
     user: Annotated[UserOut, Depends(get_current_user)]
 ) -> HTMLResponse:
+    
+    '''Страница с регистрацией'''
+
     return templates.TemplateResponse(
         'register.html',
         {'request': request, 'user': user},
@@ -38,6 +40,8 @@ async def rigister_user(
     session: Annotated[AsyncSession, Depends(get_async_session)],
 ) -> UserOut:
     
+    '''Регистрация нового пользователя'''
+
     exist_user: UserOut = await UserRepository.find_one_or_none(
         session=session, email=user.email
     )
@@ -62,6 +66,9 @@ async def login_user(
     user: UserLogin,
     session: Annotated[AsyncSession, Depends(get_async_session)],
 ) -> str:
+    
+    '''Вход пользователя'''
+
     user: UserOut = await authenticate_user(user.email, user.password, async_db=session)
     if not user:
         raise UserNotFound
@@ -80,6 +87,9 @@ async def get_after_register_template(
     request: Request,
     user: Annotated[User, Depends(get_current_user)]
 ):
+    
+    '''Страница после регистрации'''
+
     return templates.TemplateResponse(
         request=request,
         name='after_register.html',
@@ -92,6 +102,9 @@ async def get_login_template(
     request: Request, 
     user: Annotated[UserOut, Depends(get_current_user)]
 ) -> HTMLResponse:
+    
+    '''Страница со входом'''
+
     return templates.TemplateResponse(
         request=request, name='login.html', context={'user': user}
     )
@@ -102,6 +115,8 @@ async def logout_user(
     response: Response,
     request: Request,
 ):
+    '''Удаление куки'''
+
     cookies: str | None = request.cookies.get('user_access_token')
     if cookies:
         response.delete_cookie(key='user_access_token')
