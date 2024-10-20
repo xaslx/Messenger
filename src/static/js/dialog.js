@@ -17,8 +17,6 @@ function openDialog(element) {
    
     element.classList.add('selected');
     const newUserId = element.getAttribute('data-id');
-
- 
     if (socket) {
         socket.close();
         console.log('Предыдущее соединение закрыто');
@@ -50,7 +48,13 @@ function openDialog(element) {
             dialogContainer.innerHTML = '';
             console.log(data);
             const dialogContent = `
-                <h2>Диалог с ${data.partner.name} ${data.partner.surname} (${data.partner.is_online})</h2>
+              <h2>
+                    Диалог с ${data.partner.name} ${data.partner.surname}
+                    <span style="color: ${data.partner.is_online ? 'green' : 'red'};">
+                        (${data.partner.is_online ? 'В сети' : 'Не в сети'})
+                    </span>
+                </h2>
+
                 <div class="messages">
                     ${data.messages.map(message => `
                         <div class="message ${message.senderId === data.user.id ? 'sender' : 'receiver'}">
@@ -62,7 +66,7 @@ function openDialog(element) {
                     `).join('')}
                 </div>
                 <input type="text" placeholder="Введите сообщение..." id="messageInput" />
-                <button onclick="sendMessage(${newUserId})">Отправить</button>
+                <button class="btn-send" onclick="sendMessage(${newUserId})">Отправить</button>
             `;
             dialogContainer.innerHTML = dialogContent;
             const messagesContainer = dialogContainer.querySelector('.messages');
