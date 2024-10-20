@@ -18,7 +18,7 @@ from src.schemas.user import UserOut
 
 
 def get_token(request: Request):
-    token: str = request.cookies.get("user_access_token")
+    token: str = request.cookies.get('user_access_token')
     if not token:
         return None
     return token
@@ -41,19 +41,20 @@ async def get_current_user(
     if not token:
         return None
     payload = valid_token(token=token)
-    user_personal_link: str = payload.get("sub")
-    user_data: None | str = await redis.get(user_personal_link)
+    user_id: str = payload.get('sub')
+    user_data: None | str = await redis.get(f'user:{user_id}')
     if user_data:
         user: UserOut = UserOut.model_validate_json(user_data)
     else:
         user: User = await UserRepository.find_one_or_none(
-            personal_link=user_personal_link, session=async_db
+            id=int(user_id), session=async_db
         )
-        user_out = UserOut.model_validate(user)
-        if user:
-            await redis.set(user_personal_link, user_out.model_dump_json(), ex=600)
+        if user is None:
+            return None
+        user_out: UserOut = UserOut.model_validate(user)
+        await redis.set(f'user:{user_id}', user_out.model_dump_json(), ex=600)
 
-    if not user_personal_link:
+    if not user_id:
         raise UserIsNotPresentException
     if not user:
         return None
