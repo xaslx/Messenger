@@ -16,6 +16,6 @@ router: Router = Router()
 bot: Bot = Bot(settings.TOKEN_BOT, default=DefaultBotProperties(parse_mode="HTML"))
 
 
-@router.message(Command(commands="cancel"), StateFilter(default_state))
-async def process_cancel_command(message: Message):
-    await message.answer(text="Отменять нечего.\n\n" "Отправьте команду /new")
+@router.message(StateFilter(default_state))
+async def echo(message: Message):
+    await message.answer(text=f'Ваш ID: <b>{message.from_user.id}</b>\nВставьте его на сайте')
