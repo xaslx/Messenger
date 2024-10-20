@@ -5,7 +5,8 @@ document.getElementById('registration-form').addEventListener('submit', async fu
         name: document.getElementById('first_name').value,
         surname: document.getElementById('last_name').value,
         email: document.getElementById('email').value,
-        password: document.getElementById('password').value
+        password: document.getElementById('password').value,
+        telegram_id: document.getElementById('telegram_id').value
     };
 
     try {
