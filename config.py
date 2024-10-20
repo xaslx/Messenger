@@ -17,7 +17,8 @@ class Settings(BaseSettings):
 
 
 
-    webhook_url: str
+    WEBHOOK_URL: str
+    TOKEN_BOT: str
 
     @property
     def DATABASE_URL(self):
