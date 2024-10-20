@@ -44,7 +44,8 @@ body {
 }
 
 .auth-link {
-    margin-left: 20px;
+    margin-left: 5px;
+    margin-right: 10px;
     text-decoration: none;
     color: black;
 }
@@ -111,10 +112,11 @@ body {
 
 .main-container {
     max-width: 1000px;
+    min-height: 100px;
     margin: 0 auto;
     display: flex;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: stretch;
     padding: 5px;
     background-color: rgb(255, 255, 255);
     border-radius: 15px;
@@ -122,16 +124,14 @@ body {
 }
 
 
-/* Sidebar */
 .sidebar {
     display: flex;
     flex-direction: column;
     background-color: #f8f9fa;
     padding: 20px;
     border-right: 1px solid #dee2e6;
-    max-width: 350px;
+    max-width: 250px;
 }
-
 
 .user-list-container {
     display: flex;
@@ -146,6 +146,7 @@ body {
     align-items: center;
     width: 100%;
     padding: 6px;
+    font-size: 14px;
     background-color: #ffffff;
     border-radius: 8px;
     text-decoration: none;
@@ -153,7 +154,13 @@ body {
     border: 1px solid #dee2e6;
     transition: background-color 0.3s, border-color 0.3s, transform 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-wrap: break-word;
+
 }
+
 
 .user-card:hover {
     background-color: #f1f3f5;
@@ -182,6 +189,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     min-height: 600px;
+    margin-top: -20px;
 }
 
 
@@ -211,6 +219,9 @@ body {
 
 .form-group-register {
     margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .label-register {
@@ -235,12 +246,11 @@ body {
 }
 
 .button-register {
-    width: 100%;
-    padding: 10px;
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
+    padding: 10px 40px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -271,7 +281,6 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    
     text-align: center;
     width: 300px;
     margin: 0 auto;
@@ -297,3 +306,79 @@ body {
 
 
 /* messages */
+.messages {
+    min-height: 350px;
+    max-height: 350px;
+    max-width: 650px;
+    overflow-y: auto;
+    margin-bottom: 16px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.message {
+    max-width: 80%;
+    word-wrap: break-word;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    position: relative;
+    display: inline-block;
+    line-height: 1.4;
+}
+
+.message.sender {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+}
+
+.message.receiver {
+    background-color: #f1f1f1;
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 0;
+}
+
+
+
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    margin-right: 10px;
+}
+
+
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.btn-send {
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.message-timestamp {
+    color: rgb(91, 89, 89);
+    font-size: 0.9em;
+    margin-top: 5px;
+    text-align: right;
+}
