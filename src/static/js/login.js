@@ -26,7 +26,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
         }
 
         const result = await response.json();
-        window.location.href = '/';
+        window.location.href = '/messages';
     } catch (error) {
         console.error('Ошибка:', error);
         alert('Ошибка: ' + error.message);
