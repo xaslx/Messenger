@@ -72,7 +72,7 @@ function connectWebSocket(userId) {
         console.log('Предыдущее соединение закрыто');
     }
 
-    socket = new WebSocket(`wss://4de7-78-85-48-244.ngrok-free.app/ws/messages/${userId}`);
+    socket = new WebSocket(`wss://messenger-hefw.onrender.com//ws/messages/${userId}`);
 
     socket.onopen = () => {
         console.log(`WebSocket соединение установлено для пользователя ${userId}`);
