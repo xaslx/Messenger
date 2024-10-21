@@ -1,14 +1,10 @@
-from aiogram import Bot, F, Router
+from aiogram import Bot, Router
 from aiogram.client.default import DefaultBotProperties
-from aiogram.filters import Command, StateFilter
+from aiogram.filters import StateFilter
 from aiogram.fsm.state import default_state
-from aiogram.types import (
-    Message,
-)
-
+from aiogram.types import Message
 
 from config import settings
-
 
 router: Router = Router()
 

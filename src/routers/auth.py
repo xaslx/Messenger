@@ -4,16 +4,15 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Request, Response
 from fastapi.responses import HTMLResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.auth.dependencies import get_current_user
-from src.auth.auth import get_password_hash, create_access_token, authenticate_user
 
 from database import get_async_session
 from exceptions import UserAlreadyExistsException, UserNotFound
+from src.auth.auth import authenticate_user, create_access_token, get_password_hash
+from src.auth.dependencies import get_current_user
 from src.models.user import User
-from src.utils.jinja_template import templates
 from src.repositories.user import UserRepository
-from src.schemas.user import UserLogin, UserRegister, UserOut
-
+from src.schemas.user import UserLogin, UserOut, UserRegister
+from src.utils.jinja_template import templates
 
 auth_router: APIRouter = APIRouter(
     prefix="/auth", tags=["Аутентификация и Авторизация"]

@@ -1,28 +1,29 @@
 from datetime import datetime
+from typing import Annotated
+
 from fastapi import (
     APIRouter,
-    Request,
+    BackgroundTasks,
     Depends,
+    Request,
     WebSocket,
     WebSocketDisconnect,
-    BackgroundTasks,
 )
-from src.models.chat import Message
-from src.models.user import User
-from src.repositories.user import UserRepository
-from src.schemas.message import MessageCreate, MessageRead
-from src.utils.jinja_template import templates
-from src.utils.utils import notify_user
-from database import get_async_session
-from src.auth.dependencies import get_current_user
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import Annotated
-from src.schemas.user import UserOut
-from src.repositories.chat import ChatRepository
+
+from database import get_async_session
 from logger import logger
 from redis_init import redis
+from src.auth.dependencies import get_current_user
+from src.models.chat import Message
+from src.models.user import User
+from src.repositories.chat import ChatRepository
+from src.repositories.user import UserRepository
+from src.schemas.message import MessageCreate, MessageRead
+from src.schemas.user import UserOut
 from src.tasks.task import send_notify
-
+from src.utils.jinja_template import templates
+from src.utils.utils import notify_user
 
 main_router: APIRouter = APIRouter(tags=["Мессенджер"])
 

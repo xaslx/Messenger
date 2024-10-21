@@ -1,5 +1,6 @@
-from pydantic import BaseModel, EmailStr, ConfigDict, field_validator
 from datetime import datetime
+
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 
 class User(BaseModel):

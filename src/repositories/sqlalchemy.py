@@ -1,8 +1,9 @@
-from src.repositories.base import AbstractRepository
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import insert, delete, select
-from logger import logger
+from sqlalchemy import delete, insert, select
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from logger import logger
+from src.repositories.base import AbstractRepository
 
 
 class SQLAlchemyRepository(AbstractRepository):

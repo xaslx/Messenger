@@ -5,12 +5,13 @@ from jose import jwt
 from passlib.context import CryptContext
 from pydantic import EmailStr
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.repositories.user import UserRepository
-from src.schemas.user import UserOut
+
 from config import settings
 from database import get_async_session
-from src.models.user import User
 from exceptions import IncorrectEmailOrPasswordException
+from src.models.user import User
+from src.repositories.user import UserRepository
+from src.schemas.user import UserOut
 
 pwd_context: CryptContext = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

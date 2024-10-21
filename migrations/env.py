@@ -2,12 +2,11 @@ from logging.config import fileConfig
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
-from src.models.chat import Message
-from src.models.user import User
-
 
 from config import settings
 from database import Base
+from src.models.chat import Message
+from src.models.user import User
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

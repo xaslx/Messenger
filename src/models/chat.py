@@ -1,12 +1,11 @@
-from sqlalchemy import ForeignKey, String, DateTime
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from database import Base
 from datetime import datetime
 from typing import TYPE_CHECKING
 
+from sqlalchemy import DateTime, ForeignKey, String
+from sqlalchemy.orm import Mapped, mapped_column
 
-if TYPE_CHECKING:
-    from src.models.user import User
+from database import Base
+
 
 
 class Message(Base):

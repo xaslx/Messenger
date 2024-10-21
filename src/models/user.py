@@ -1,11 +1,11 @@
-from database import Base
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import DateTime
 from typing import TYPE_CHECKING
 
+from sqlalchemy import DateTime
+from sqlalchemy.orm import Mapped, mapped_column
 
-if TYPE_CHECKING:
-    from src.models.chat import Message
+from database import Base
+
+
 
 
 class User(Base):

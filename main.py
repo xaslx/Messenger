@@ -1,19 +1,20 @@
-from fastapi import FastAPI, HTTPException, Request, Depends
-from fastapi.responses import RedirectResponse
-from src.auth.dependencies import get_current_user
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
-from logger import logger
 from contextlib import asynccontextmanager
+
+from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from config import settings
+from database import get_async_session
+from logger import logger
+from redis_init import redis
+from src.auth.dependencies import get_current_user
+from src.bot.app import handle_web_hook, on_startup
 from src.routers.auth import auth_router
 from src.routers.main import main_router
-from redis_init import redis
-from database import get_async_session
-from sqlalchemy.ext.asyncio import AsyncSession
-from src.bot.app import handle_web_hook
 from src.schemas.user import UserOut
-from src.bot.app import on_startup
 
 
 @asynccontextmanager

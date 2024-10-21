@@ -4,10 +4,9 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.client.default import DefaultBotProperties
 from fastapi import Request, Response
 
-from src.bot.handlers import router
 from config import settings
 from logger import logger
-
+from src.bot.handlers import router
 
 bot: Bot = Bot(settings.TOKEN_BOT, default=DefaultBotProperties(parse_mode="HTML"))
 dp: Dispatcher = Dispatcher()

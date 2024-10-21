@@ -1,7 +1,8 @@
-from src.repositories.sqlalchemy import SQLAlchemyRepository
-from src.models.chat import Message
-from sqlalchemy import select, or_, and_
+from sqlalchemy import and_, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.models.chat import Message
+from src.repositories.sqlalchemy import SQLAlchemyRepository
 
 
 class ChatRepository(SQLAlchemyRepository):

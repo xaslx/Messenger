@@ -2,17 +2,12 @@ from fastapi import Depends, Request
 from jose import ExpiredSignatureError, JWTError, jwt
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.models.user import User
-
-from src.repositories.user import UserRepository
-
 from config import settings
 from database import get_async_session
-from exceptions import (
-    IncorrectTokenException,
-    UserIsNotPresentException,
-)
+from exceptions import IncorrectTokenException, UserIsNotPresentException
 from redis_init import redis
+from src.models.user import User
+from src.repositories.user import UserRepository
 from src.schemas.user import UserOut
 
 

@@ -1,4 +1,5 @@
 from aiogram import Bot
+
 from config import settings
 
 bot: Bot = Bot(settings.TOKEN_BOT)
