@@ -250,8 +250,10 @@ body {
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 20px;
+    width: 85%;
     padding: 10px 40px;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -359,7 +361,6 @@ input[type="text"] {
     border: 1px solid #ccc;
     border-radius: 20px;
     outline: none;
-    margin-right: 10px;
 }
 
 
@@ -382,4 +383,126 @@ button:hover {
     font-size: 0.9em;
     margin-top: 5px;
     text-align: right;
+}
+
+
+
+/* mobile */
+@media (max-width: 768px) {
+    .hide-on-mobile {
+        display: none;
+    }
+
+    .dropdown-menu {
+        transform: translateX(-30px);
+    }
+    
+    button {
+        text-align: center;
+    }
+    
+    body {
+        padding: 5px;
+    }
+
+    .sidebar {
+        max-width: 50px;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    span {
+        font-size: 14px;
+    }
+
+    .messages {
+        width: 100%;
+    }
+
+    .message.sender {
+        font-size: 12px;
+    }
+
+    .message.receiver {
+        font-size: 12px;
+    }
+
+
+    input#messageInput {
+        width: 55%;
+    }
+
+    .dialog-container {
+        margin-left: -22px;
+        padding: 20px;
+        display: none;
+
+    }
+
+    .sidebar {
+        margin-left: -2px;
+        border-radius: 10px;
+        border: none;
+    }
+
+    .user-card {
+        margin-left: -7px;
+    }
+
+    .profile-card {
+        margin: 0px auto;
+    }
+
+    .button-register {
+        width: 80%;
+    }
+
+    .button-register {
+        width: 88%;
+        border-radius: 20px;
+    }
+    .form-group-register {
+        align-items: stretch;
+    }
+
+    .input-register {
+        width: 100%;
+    }
+
+    .btn-send {
+        width: 35%; 
+        text-align: center;
+        margin-top: -10px;
+        font-size: 12px;
+    }
+    .dialog {
+        margin-top: 10px;
+        width: 40%;
+        text-align: center;
+    }
+
+    .dialog-container {
+        display: none;
+    }
+
+
+    .sidebar {
+        display: block;
+        width: 100%;
+    }
+
+
+    .sidebar.hide {
+        display: none;
+    }
+
+    .dialog-container.show {
+        display: block;
+        width: 100%;
+    }
+
+ 
+    
 }
