@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:16
+    container_name: messenger_db
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    env_file:
+      - .env-non-dev
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=messenger
+    ports:
+      - 5432:5432
+
+  redis:
+    image: redis:7
+    container_name: messenger_redis
+
+  messenger:
+    image: messenger_app
+    container_name: messenger_app
+    env_file:
+      - .env-non-dev
+    depends_on:
+      - db
+      - redis
+    command: >
+      sh -c "alembic upgrade head && gunicorn main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000"
+    ports:
+      - 7777:8000
+
+  # nginx:
+  #   image: nginx:latest
+  #   container_name: messenger_nginx
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/conf.d/default.conf
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #   depends_on:
+  #     - messenger
+
+volumes:
+  postgresdata:
