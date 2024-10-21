@@ -1,4 +1,7 @@
 let socket;
+let reconnectAttempts = 0;
+const maxReconnectAttempts = 5;
+const reconnectInterval = 2000;
 
 document.addEventListener("DOMContentLoaded", function() {
     const userCards = document.querySelectorAll('.user-card');
@@ -7,54 +10,30 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-
 function openDialog(element) {
     const userCards = document.querySelectorAll('.user-card');
     userCards.forEach(card => {
         card.classList.remove('selected');
     });
 
-   
     element.classList.add('selected');
     const newUserId = element.getAttribute('data-id');
-    if (socket) {
-        socket.close();
-        console.log('Предыдущее соединение закрыто');
-    }
 
-    socket = new WebSocket(`ws://127.0.0.1:8000/ws/messages/${newUserId}`);
-
-    socket.onopen = () => {
-        console.log(`WebSocket соединение установлено для пользователя ${newUserId}`);
-    };
+    connectWebSocket(newUserId);
     
-    socket.onmessage = (event) => {
-        const incomingMessage = JSON.parse(event.data);
-        console.log(incomingMessage);
-        if (incomingMessage.recipient_id === currentUserId || incomingMessage.sender_id === currentUserId) {
-            addMessageToDialog(incomingMessage);
-        }
-    };
-    
-    
-
-    socket.onclose = () => console.log('WebSocket соединение закрыто');
-    
- 
     fetch(`/messages/${newUserId}`)
         .then(response => response.json())
         .then(data => {
             const dialogContainer = document.querySelector('.dialog-container');
             dialogContainer.innerHTML = '';
-            console.log(data);
+
             const dialogContent = `
-              <h2>
+                <h2>
                     Диалог с ${data.partner.name} ${data.partner.surname}
                     <span style="color: ${data.partner.is_online ? 'green' : 'red'};">
                         (${data.partner.is_online ? 'В сети' : 'Не в сети'})
                     </span>
                 </h2>
-
                 <div class="messages">
                     ${data.messages.map(message => `
                         <div class="message ${message.senderId === data.user.id ? 'sender' : 'receiver'}">
@@ -69,9 +48,14 @@ function openDialog(element) {
                 <button class="btn-send" onclick="sendMessage(${newUserId})">Отправить</button>
             `;
             dialogContainer.innerHTML = dialogContent;
+
             const messagesContainer = dialogContainer.querySelector('.messages');
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            const messageInput = document.querySelector('.dialog-container input[type="text"]');
+
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.add('hide');
+            const dialogContainerMobile = document.querySelector('.dialog-container');
+            dialogContainerMobile.classList.add('show');
             messageInput.addEventListener('keydown', (event) => {
                 if (event.key === 'Enter') {
                     event.preventDefault();
@@ -82,11 +66,50 @@ function openDialog(element) {
         .catch(error => console.error('Ошибка:', error));
 }
 
+function connectWebSocket(userId) {
+    if (socket) {
+        socket.close();
+        console.log('Предыдущее соединение закрыто');
+    }
+
+    socket = new WebSocket(`wss://4de7-78-85-48-244.ngrok-free.app/ws/messages/${userId}`);
+
+    socket.onopen = () => {
+        console.log(`WebSocket соединение установлено для пользователя ${userId}`);
+        reconnectAttempts = 0;
+    };
+
+    socket.onmessage = (event) => {
+        const incomingMessage = JSON.parse(event.data);
+        if (incomingMessage.recipient_id === currentUserId || incomingMessage.sender_id === currentUserId) {
+            addMessageToDialog(incomingMessage);
+        }
+    };
+
+    socket.onclose = () => {
+        console.log('WebSocket соединение закрыто');
+        attemptReconnect(userId);
+    };
+
+    socket.onerror = (error) => {
+        console.error('Ошибка WebSocket:', error);
+        attemptReconnect(userId);
+    };
+}
+
+function attemptReconnect(userId) {
+    if (reconnectAttempts < maxReconnectAttempts) {
+        reconnectAttempts++;
+        console.log(`Попытка переподключения (${reconnectAttempts}/${maxReconnectAttempts}) через ${reconnectInterval / 1000} секунд...`);
+        setTimeout(() => connectWebSocket(userId), reconnectInterval);
+    } else {
+        console.log('Превышено количество попыток переподключения.');
+    }
+}
 
 function sendMessage(recipientId) {
     const messageInput = document.querySelector('.dialog-container input[type="text"]');
     const messageContent = messageInput.value;
-
 
     if (messageContent.trim() === '') {
         return;
@@ -108,9 +131,11 @@ function sendMessage(recipientId) {
     .then(data => {
         addMessageToDialog(data);
         messageInput.value = '';
- 
-        socket.send(JSON.stringify(data));
- 
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify(data));
+        } else {
+            console.log('Сообщение не может быть отправлено, WebSocket не открыт.');
+        }
     })
     .catch(error => console.error('Ошибка:', error));
 }
@@ -118,7 +143,7 @@ function sendMessage(recipientId) {
 function addMessageToDialog(message) {
     const dialogContainer = document.querySelector('.dialog-container .messages');
     const messageElement = document.createElement('div');
-    
+
     const isSender = message.sender_id === currentUserId;
     messageElement.className = `message ${isSender ? 'sender' : 'receiver'}`;
     messageElement.innerHTML = `
