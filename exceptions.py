@@ -32,7 +32,7 @@ class UserNotFound(BaseException):
 
 class UserIsNotPresentException(BaseException):
     status_code = status.HTTP_401_UNAUTHORIZED
-    
+
 
 # JWT token
 class TokenExpiredException(BaseException):

@@ -9,19 +9,17 @@ class User(BaseModel):
     telegram_id: int
 
 
-
 class UserRegister(User):
     password: str
+
 
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
 
+
 class UserOut(User):
     id: int
     registered_at: datetime
-    
-    
-    model_config = ConfigDict(from_attributes=True)
 
-    
+    model_config = ConfigDict(from_attributes=True)

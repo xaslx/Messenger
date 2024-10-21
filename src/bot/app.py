@@ -13,6 +13,7 @@ bot: Bot = Bot(settings.TOKEN_BOT, default=DefaultBotProperties(parse_mode="HTML
 dp: Dispatcher = Dispatcher()
 web_hook: str = f"/{settings.TOKEN_BOT}"
 
+
 async def set_webhook():
     webhook_url: str = f"{settings.WEBHOOK_URL}{web_hook}"
     await bot.set_webhook(webhook_url, allowed_updates=["callback_query", "message"])

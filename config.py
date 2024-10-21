@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 class Settings(BaseSettings):
     LOG_LEVEL: str
 
@@ -14,8 +15,6 @@ class Settings(BaseSettings):
 
     REDIS_HOST: str
     REDIS_PORT: int
-
-
 
     WEBHOOK_URL: str
     TOKEN_BOT: str

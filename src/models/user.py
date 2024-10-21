@@ -4,12 +4,12 @@ from sqlalchemy import DateTime
 from typing import TYPE_CHECKING
 
 
-
 if TYPE_CHECKING:
     from src.models.chat import Message
 
+
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(unique=True)
