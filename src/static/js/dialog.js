@@ -28,6 +28,7 @@ function openDialog(element) {
             dialogContainer.innerHTML = '';
 
             const dialogContent = `
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
                 <h2>
                     Диалог с ${data.partner.name} ${data.partner.surname}
                     <span style="color: ${data.partner.is_online ? 'green' : 'red'};">
@@ -44,8 +45,14 @@ function openDialog(element) {
                         </div>
                     `).join('')}
                 </div>
-                <input type="text" placeholder="Введите сообщение..." id="messageInput" />
-                <button class="btn-send" onclick="sendMessage(${newUserId})">Отправить</button>
+                <div style="display: flex; align-items: center;">
+                    <label for="fileInput" class="file-label">
+                        <i class="fas fa-paperclip"></i> <!-- Иконка скрепки -->
+                    </label>
+                    <input type="file" id="fileInput" class="file-input" />
+                    <input type="text" placeholder="Введите сообщение..." id="messageInput" />
+                    <button class="btn-send" onclick="sendMessage(${newUserId})">Отправить</button>
+                </div>
             `;
             dialogContainer.innerHTML = dialogContent;
 
@@ -71,8 +78,7 @@ function connectWebSocket(userId) {
         socket.close();
         console.log('Предыдущее соединение закрыто');
     }
-
-    socket = new WebSocket(`wss://e2fb-78-85-4-141.ngrok-free.app/ws/messages/${userId}`);
+    socket = new WebSocket(`wss://messenger-hefw.onrender.com/ws/messages/${userId}`);
 
     socket.onopen = () => {
         console.log(`WebSocket соединение установлено для пользователя ${userId}`);
