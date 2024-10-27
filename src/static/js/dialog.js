@@ -45,6 +45,7 @@ function openDialog(element) {
                         </div>
                     `).join('')}
                 </div>
+                
                 <div style="display: flex; align-items: center;">
                     <label for="fileInput" class="file-label">
                         <i class="fas fa-paperclip"></i> <!-- Иконка скрепки -->
